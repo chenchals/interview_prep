@@ -25,6 +25,7 @@ class BinarySearch(object):
             else:
                 return None
 
+    # todo @charles, implement these 3 methods
     def thirdMethod(self):
         pass
 
