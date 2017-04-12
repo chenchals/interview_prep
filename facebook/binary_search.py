@@ -25,6 +25,15 @@ class BinarySearch(object):
             else:
                 return None
 
+    def thirdMethod(self):
+        pass
+
+    def fourthMethod(self):
+        pass
+
+    def fifthMethod(self):
+        pass
+
 test = BinarySearch()
 dat = [1,3,5,12]
 dat = [1,2,12,13,111]
