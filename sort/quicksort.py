@@ -1,5 +1,5 @@
 def quick_sort(li, l, r):
-    print(li)
+    # print(li)
     if l >= r:
         return
     # l: start; r: end
@@ -13,7 +13,7 @@ def quick_sort(li, l, r):
             l += 1
         if li[r] >= li[pivot]:
             r -= 1
-        if li[l] < li[pivot] < li[r]:
+        if li[r] < li[pivot] < li[l]:
             tmp = li[l]
             li[l] = li[r]
             li[r] = tmp
@@ -21,10 +21,11 @@ def quick_sort(li, l, r):
             # l += 1
             # r -= 1
     # swap the value of pivot and l
-    tmp = li[l-1]
-    li[l-1] = li[pivot]
+    tmp = li[l]
+    li[l] = li[pivot]
     li[pivot] = tmp
     pivot = l
+    print(li)
     quick_sort(li, head, pivot-1)
     quick_sort(li, pivot, tail)
 
