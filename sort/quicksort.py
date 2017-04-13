@@ -1,3 +1,5 @@
+
+# todo @charles rewrite this, the 1st practice produced so many bugs!!!
 def quick_sort(li, l, r, verbose=False):
     if verbose:
         print('init:',l,r, li)
