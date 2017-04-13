@@ -9,9 +9,9 @@ def quick_sort(li, l, r):
     l += 1
     # move the pointers
     while l < r:
-        if li[l] > li[pivot]:
+        if li[l] < li[pivot]:
             l += 1
-        if li[r] <= li[pivot]:
+        if li[r] >= li[pivot]:
             r -= 1
         if li[l] < li[pivot] < li[r]:
             tmp = li[l]
@@ -28,6 +28,7 @@ def quick_sort(li, l, r):
     quick_sort(li, head, pivot-1)
     quick_sort(li, pivot, tail)
 
-l1 = [5,1,5]
+# there's a bug
+l1 = [2,1,5,3,7]
 quick_sort(l1, 0, 2)
 print(l1)
