@@ -1,51 +1,35 @@
 
-# todo @charles rewrite this, the 1st practice produced so many bugs!!!
-def quick_sort(li, l, r, verbose=False):
-    if verbose:
-        print('init:',l,r, li)
-    # print(li)
+def quick_sort(li):
+    copied = li[:]
+    quick_sort_recursive(copied, 0, len(copied)-1)
+    return copied
+
+def quick_sort_recursive(li, l, r):
     if l >= r:
         return
-    # l: start; r: end
     head = l
     tail = r
-    pivot  = l
-    # l += 1
-    if verbose:
-        print('summary', head,tail,pivot,l,r)
-    # move the pointers
-    while l < r:
-        if verbose:
-            print(pivot,l,r,end=' ')
-        if li[r] < li[pivot] < li[l]:
-            tmp = li[l]
-            li[l] = li[r]
-            li[r] = tmp
-            # i'm moving this pointer again! don't do it!
-            l += 1
+    pivot = l
+    l += 1
+    while l <= r:
+        if li[r] <= li[pivot] < li[l]:
+            li[l], li[r] = li[r], li[l]
+        if li[pivot] < li[r]:
             r -= 1
-        if li[l] <= li[pivot]:
+        if li[pivot] >= li[l]:
             l += 1
-        if li[r] >= li[pivot]:
-            r -= 1
-        if verbose:
-            print(l,r)
-        # print(li)
-    # swap the value of pivot IN VALID case
-    if li[pivot] > li[r]:
-        tmp = li[r]
-        li[r] = li[pivot]
-        li[pivot] = tmp
-        # only increment after swap
-        pivot = r
-    if verbose:
-        print(li)
-    quick_sort(li, head, pivot-1, verbose=verbose)
-    # i forgot to increment right pointer. Once we sorted current pivot, leave current pivot untouched and sort rest of array
-    quick_sort(li, pivot+1, tail, verbose=verbose)
+    li[pivot], li[r] = li[r], li[pivot]
+    pivot = r
+    quick_sort_recursive(li, head, pivot-1)
+    quick_sort_recursive(li, pivot+1, tail)
 
-# there's a bug
-l1 = [3,3,1,3]
-print(l1)
-quick_sort(l1, 0, len(l1)-1, verbose=False)
-print(l1)
+import random
+epoch = 10
+for _ in range(epoch):
+    query = [random.randint(0, 5) for _ in range(10)]
+    answer = sorted(query)
+    print(query, end='-')
+    my_answer = quick_sort(query)
+    print(query, answer, my_answer)
+    if answer != my_answer:
+        raise Exception(query, answer, my_answer)
