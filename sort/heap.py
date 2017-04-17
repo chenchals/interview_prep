@@ -38,11 +38,11 @@ class MinHeap(object):
         return self.heap[1]
 
     def percDown(self, cur):
-        hl = len(self.heap)
+        heap_size = len(self.heap)
         pos = cur
         left = pos * 2
-        right = pos * 2 + 1 if pos * 2 + 1 < hl else left
-        if left < hl:
+        right = pos * 2 + 1 if pos * 2 + 1 < heap_size else left
+        if left < heap_size:
             left_val, right_val = self.heap[left], self.heap[right]
             next_idx = left if left_val < right_val else right
             if self.heap[cur] > self.heap[next_idx]:
@@ -56,7 +56,7 @@ class MinHeap(object):
         self.heap[1], ret = self.heap[-1], self.heap[1]
         self.heap.pop(-1)
         pos = 1
-        hl = len(self.heap)
+        heap_size = len(self.heap)
 
         # recursive approach
         if recursive:
@@ -66,13 +66,14 @@ class MinHeap(object):
             # iterative approach
             while True:
                 left = pos * 2
-                right = pos * 2 + 1 if pos * 2 + 1 < len(self.heap) else left
-                if right >= hl:
-                    break
-                child_idx = left if self.heap[left] < self.heap[right] else right
-                if self.heap[pos] > self.heap[child_idx]:
-                    self.heap[pos], self.heap[child_idx] = self.heap[child_idx], self.heap[pos]
-                    pos = child_idx
+                right = pos * 2 + 1 if pos * 2 + 1 < heap_size else left
+                if left < heap_size:
+                    child_idx = left if self.heap[left] < self.heap[right] else right
+                    if self.heap[pos] > self.heap[child_idx]:
+                        self.heap[pos], self.heap[child_idx] = self.heap[child_idx], self.heap[pos]
+                        pos = child_idx
+                    else:
+                        break
                 else:
                     break
 
@@ -100,6 +101,6 @@ for _ in range(episode):
     sorted_test = []
     answer = sorted(test.getHeap())
     for _ in range(len(original)):
-        sorted_test.append(test.deleteMin(recursive=True))
+        sorted_test.append(test.deleteMin(recursive=False))
     if sorted_test != answer:
         raise Exception('bug',sorted_test, answer)
