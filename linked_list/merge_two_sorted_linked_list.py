@@ -26,10 +26,15 @@ def build_linked_list_from_list(li):
     return head
 
 def merge_sorted_linked_list(head1, head2):
+    if head2 is None:
+        return head1
+    elif head1 is None:
+        return head2
+    elif head1 is None and head2 is None:
+        return None
+    # a dummy node to start
     head = tail = Node()
-    # construct a new linked list
-    # always compare the current head of new list with the head of two existing lists
-    # link the new list to the min (head1, head2)
+    # both list1 and list2 exist
     while head1 is not None and head2 is not None:
         if head1.v < head2.v:
             c = head1
@@ -38,10 +43,12 @@ def merge_sorted_linked_list(head1, head2):
             c = head2
             head2 = head2.next
         tail.next = c
-        tail = tail.next
-    # link the rest of the list
+        tail = c
     tail.next = head1 or head2
-    return head.next
+    head = head.next
+    return head
+
+
 
 l1 = [1,3,4]
 l2 = [1,4,6]

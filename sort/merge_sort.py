@@ -1,22 +1,24 @@
 def merge_sort(li):
-    copied = li[:]
-    _merge_sort(copied, 0, len(copied)-1)
-    return copied
+    copy = li[:]
+    _merge_sort(copy, 0, len(copy)-1)
+    return copy
 
 def _merge_sort(li, l, r):
-    # base case
+    # in place swap
+    # base condition, return when cross over
     if l >= r:
         return
-    # split
     m = int((l+r)/2)
-    _merge_sort(li, l, m)
-    _merge_sort(li, m+1, r)
-    # merge
+    if l <= m:
+        _merge_sort(li, l, m)
+    if m+1 <= r:
+        _merge_sort(li, m+1, r)
     _merge(li, l, m, m+1, r)
+    pass
 
 def _merge(li, l1, r1, l2, r2):
-    head, tail = l1, r2
-    buffer = [0 for _ in range(l1, r2+1)]
+    buffer = list(range(r2-l1+1))
+    head = l1
     p = 0
     while l1 <= r1 and l2 <= r2:
         if li[l1] < li[l2]:
@@ -35,14 +37,13 @@ def _merge(li, l1, r1, l2, r2):
         buffer[p] = li[l2]
         l2 += 1
         p += 1
-    # Was a bug here, I forgot to add the offset of head to the li
     for i in range(len(buffer)):
-        li[i+head] = buffer[i]
+        li[head+i] = buffer[i]
 
 
 import random
 for _ in range(1000):
-    test = [random.randint(0,100) for _ in range(100)]
+    test = [random.randint(0,10) for _ in range(8)]
     answer = sorted(test)
     my_answer = merge_sort(test)
     # print(test, answer, my_answer)
