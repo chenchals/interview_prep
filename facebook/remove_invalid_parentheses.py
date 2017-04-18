@@ -1,6 +1,8 @@
 def check_valid(i_str):
     counter = 0
     # print(list(i_str))
+    if len(i_str) == 0:
+        return True
     if list(i_str)[0] == ')':
         return False
     for c in i_str:
@@ -17,8 +19,7 @@ def get_neighbors(i_str):
     i_str = list(i_str)
     for i in range(len(i_str)):
         neighbor = ''.join([i_str[x] for x in range(len(i_str)) if ((i_str[i] !='(' and i_str[i] != ')') or x != i)])
-        if len(neighbor) > 0:
-            n.append(neighbor)
+        n.append(neighbor)
     # print(n)
     return n
 
@@ -31,7 +32,6 @@ def BFS(i_str):
     queue = neighbors
     ret = set()
     visited = set()
-    c = ''
     found = False
     while len(queue) != 0:
         c = queue.pop(0)
@@ -58,7 +58,7 @@ class Solution(object):
 
 if __name__ == "__main__":
     test_case = "n"
-    test_case = "("
+    test_case = ")"
     # test_case = "()()n)()"
     # test_case = "(()((()d)o"
     test = Solution()
