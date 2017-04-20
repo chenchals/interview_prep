@@ -13,6 +13,7 @@ def mul(m1, m2):
                 # print(m1[i], i , j)
                 for k in m1[i]:
                     v1 = m1[i][k]
+                    # common entry, the intersection of two non zero entries
                     v2 = m2.get(j, {}).get(k, 0)
                     # print(i, k, v1, v2)
                     sum +=  v1 * v2
