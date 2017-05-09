@@ -20,38 +20,43 @@ class LRUCache(object):
         self.count = 0
 
     def delete_node(self, key):
+        if key not in self.map:
+            return
         this = self.map[key]
+        this.next.pre = this.pre
+        this.pre.next = this.next
 
+    def add_to_head(self, node):
+        node.next = self.head.next
+        node.next.pre = node
+        node.pre = self.head
+        self.head.next = node
 
     def put(self, key, value):
         if key in self.map:
             this = self.map[key]
-            this.pre = this.pre.pre
-            this.pre.next = this.next
+            self.delete_node(key)
             this.val = value
-            this.next = self.head.next
-            this.next.pre = this
-            this.pre = self.head
-            self.head.next = this
+            self.add_to_head(this)
             return
         new = Node(key, value)
         self.map[key] = new
         if self.count >= self.capacity:
             # remove from hashmap
-            print(self.tail.pre.key)
+            # print(self.tail.pre.key)
+            buf = self.tail.pre.key
             self.map.pop(self.tail.pre.key, None)
             # remove tail
             # print(self.tail.pre.pre.key, self.tail.pre.key)
+            # todo @charles fix this, the delete_node doesn't work
+            # self.delete_node(buf)
             self.tail.pre = self.tail.pre.pre
             self.tail.pre.next = self.tail
         else:
             self.count += 1
         # add new to head
         # print(self.map)
-        new.next = self.head.next
-        new.next.pre = new
-        new.pre = self.head
-        self.head.next = new
+        self.add_to_head(new)
         return
 
     def get(self, key):
@@ -80,4 +85,3 @@ if __name__ == "__main__":
     print(test.get(2))
     test.get(1)
     test.get(2)
-    # exit()
