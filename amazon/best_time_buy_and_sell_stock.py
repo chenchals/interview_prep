@@ -6,11 +6,68 @@ class Solution(object):
         :rtype: int
         """
         self.dp = {}
-        buy = None
         if len(prices) <= 1:
             return 0
+        # buy = None
         # return self._impl_dp_(prices, buy, 0)
-        return self._impl_iterative_(prices)
+        # return self._impl_iterative_(prices)
+        return self.linear_programming(prices)
+
+
+    '''
+    The complexity is N, I have to iterate the p to figure all the best of bests from each p
+    '''
+
+    def linear_programming(self, p):
+        # print(p)
+        buy, sell = p, p
+        min_buy = self.argmin(buy)
+        if min_buy is None:
+            tmp = []
+        elif min_buy == len(p)-1:
+            tmp = []
+        else:
+            tmp = sell[min_buy:]
+        max_sell = self.argmax(tmp, min_buy)
+
+
+        cur = 0
+        while True:
+            pass
+
+
+
+
+
+
+
+
+        print(min_buy, max_sell, p, tmp)
+        if min_buy is None or max_sell is None:
+            if min_buy is None and max_sell is None:
+                return 0
+            elif min_buy is None:
+                del sell[max_sell]
+                return self.linear_programming(sell)
+            else:
+                del buy[min_buy]
+                return self.linear_programming(buy)
+        # print(buy[min_buy], sell[max_sell])
+        return max(sell[max_sell] - buy[min_buy], 0)
+
+
+    def argmax(self, v, offset=0):
+        # print(v.index(max(v))+offset)
+
+        if not len(v):
+            return None
+        return v.index(max(v))+offset
+
+    def argmin(self, v, offset=0):
+        # print(v)
+        if not len(v):
+            return None
+        return v.index(min(v))+offset
 
     def _impl_iterative_(self, p):
         p = list(p)
@@ -66,9 +123,12 @@ class Solution(object):
                 right = self.dp[(None, pos+1)]
             return max(left, right)
 
-# if __name__ == "__main__":
-#     test = Solution()
-#     p = [7, 1, 5, 3, 6, 4]
-#     # p = [7, 6, 4, 3, 1]
-#     ret = test.maxProfit(p)
-#     print(ret)
+if __name__ == "__main__":
+    test = Solution()
+    # p = [7, 1, 5, 3, 6, 4]
+    p = [7, 6, 4, 3, 1]
+    p = [3,2,6,5,0,3]
+    # p = [2,4,1]
+    # p = [7, 6, 4, 3, 1]
+    ret = test.maxProfit(p)
+    print(ret)
