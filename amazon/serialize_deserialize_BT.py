@@ -13,6 +13,7 @@ class Codec:
         :rtype: str
         """
 
+
     def deserialize(self, data):
         """Decodes your encoded data to tree.
 
